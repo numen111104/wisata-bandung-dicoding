@@ -10,6 +10,47 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          if(constraints.maxWidth <= 800) {
+            return DetailWebPage(place: place,);
+          } else {
+            return DetailMobilePage(place: place);
+          }
+        });
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({super.key});
+
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool _isFavorite = false;
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          setState(() {
+            _isFavorite = !_isFavorite;
+          });
+        },
+        icon: Icon(
+          _isFavorite ? Icons.favorite : Icons.favorite_border,
+          color: Colors.red,
+        ));
+  }
+}
+
+class DetailMobilePage extends StatelessWidget {
+  final TourismPlace place;
+  const DetailMobilePage({super.key, required this.place});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -120,26 +161,13 @@ class DetailScreen extends StatelessWidget {
   }
 }
 
-class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({super.key});
+class DetailWebPage extends StatelessWidget {
+  final TourismPlace place;
+  const DetailWebPage({super.key, required this.place});
 
-  @override
-  State<FavoriteButton> createState() => _FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends State<FavoriteButton> {
-  bool _isFavorite = false;
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          setState(() {
-            _isFavorite = !_isFavorite;
-          });
-        },
-        icon: Icon(
-          _isFavorite ? Icons.favorite : Icons.favorite_border,
-          color: Colors.red,
-        ));
+    return const Placeholder();
   }
 }
+
